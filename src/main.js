@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.js';
+import Vue from 'vue';
 import App from './App.vue'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
@@ -9,6 +9,7 @@ Vue.config.productionTip = false
 var http = require('request');
 Vue.use(Antd);
 Vue.use(VueRouter);
+
 Vue.prototype.$ajax = http;
 
 
