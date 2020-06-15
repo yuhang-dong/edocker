@@ -3,8 +3,23 @@ import VueRouter from 'vue-router'
 
 const routes = [
   { 
-    path: '/', 
-    component:  resolve => require(['@/components/Login.vue'], resolve)
+    path: '/login', 
+    component:  resolve => require(['@/views/Login.vue'], resolve)
+  },
+  {
+    path: '/',
+    component: resolve => require(['@/views/Detail.vue'],resolve),
+    children:[
+      {
+        path: "/",
+        component: resolve => require(['@/components/Container.vue'],resolve),
+      },
+      {
+        path: "details",
+        name: "containerDetails",
+        component: resolve => require(['@/components/ContainerDetails.vue'],resolve),
+      }
+    ]
   }
 ]
 
