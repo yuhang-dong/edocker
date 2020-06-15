@@ -30,8 +30,8 @@
             address: http://127.0.0.1:5678
         </a-col>
         <a-col :span="12">
-            <a-icon type="smile" theme="outlined" :style="{color: 'green'}"/> <span>on-line</span>
-            <a-icon type="smile" :rotate="180" :style="{color: 'red'}"/> <span>off-line</span>
+    <a-badge status="processing" text="on-line"/>
+    <a-badge status="error" text="off-line"/>
         </a-col></a-row>
 
         <a-card :bordered="false" class="nav-bar" style="margin-top: 20px">
@@ -99,5 +99,10 @@ export default {};
 svg {
   height: 20px;
   width: 20px;
+}
+
+.ant-badge-status-dot {
+  width: 20px;
+  height: 20px;
 }
 </style>
