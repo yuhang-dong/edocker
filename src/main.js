@@ -6,11 +6,16 @@ import VueRouter from 'vue-router'
 import router from './router'
 import store from './store'
 Vue.config.productionTip = false
+
+// import http
 var http = require('request');
+Vue.prototype.$ajax = http;
+
+
+// import other
 Vue.use(Antd);
 Vue.use(VueRouter);
 
-Vue.prototype.$ajax = http;
 
 
 new Vue({

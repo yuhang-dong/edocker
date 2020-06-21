@@ -10,16 +10,20 @@
         class="nav-bar left-width"
       >
         <a-menu-item key="1" title="asd" class="meun-item">
-          <a-icon type="pie-chart" />
-          <span>Option 1</span>
+          <router-link :to="{name: 'containerMain'}"><a-icon type="pie-chart" />
+          <span>Container</span></router-link>
         </a-menu-item>
         <a-menu-item key="2">
-          <a-icon type="desktop" />
-          <span>Option 2</span>
+          <router-link :to="{name: 'images'}"><a-icon type="desktop" />
+          <span>Image</span></router-link>
         </a-menu-item>
         <a-menu-item key="3">
           <a-icon type="inbox" />
-          <span>Option 3</span>
+          <span>Volumn</span>
+        </a-menu-item>
+        <a-menu-item key="4">
+          <a-icon type="inbox" />
+          <span>System</span>
         </a-menu-item>
       </a-menu>
     </div>
@@ -27,28 +31,77 @@
     <div class="index-container">
       <a-row class="row-bar">
         <a-col :span="12">
-            address: http://127.0.0.1:5678
+            address: {{connectUrl}}
         </a-col>
         <a-col :span="12">
-    <a-badge status="processing" text="on-line"/>
-    <a-badge status="error" text="off-line"/>
+          <a-badge status="processing" text="on-line" v-if="online"/>
+          <a-badge status="error" text="off-line" v-else/>
         </a-col></a-row>
 
         <a-card :bordered="false" class="nav-bar" style="margin-top: 20px">
+          <keep-alive>
           <router-view></router-view>
+          </keep-alive>
         </a-card>
         
       
 
     </div>
-    <!-- main header -->
-
-    <!-- main index -->
   </div>
 </template>
 
 <script>
-export default {};
+import { pingPeriod } from '../config/timerConfig'
+import { ping } from "../utils/docker/system";
+export default {
+  data() {
+    return {
+      pingTimer: '', // 用于定时发送 ping 命令
+      online: true,
+      offlineCause: '',
+    }
+  },
+  methods: {
+    pingServer() {
+      let that = this;
+      let _ping = ping(this.connectUrl);
+      _ping
+        .then(function([response, body]) {
+          if(response.statusCode == 200) {
+            that.online = true;
+            that.offlineCause = '';
+          } else {
+            that.online = false;
+            if(body) {
+              let data = JSON.parse(body);
+              that.offlineCause = data.message;
+            }
+            console.log(that.offlineCause)
+          }
+        })
+        .catch(function(error) {
+            that.online = false;
+            if(error) {
+              that.offlineCause = error;
+            }
+        });
+
+    }
+  },
+  computed: {
+    connectUrl() {
+      return this.$store.state.connectUrl;
+    }
+  },
+  mounted() {
+    // 页面创建时调用
+    this.pingTimer = setInterval(this.pingServer, pingPeriod);
+  },
+  beforeDestroy() {
+    // 离开页面前调用
+    clearInterval(this.pingTimer);
+  }
+};
 </script>
 
 <style>

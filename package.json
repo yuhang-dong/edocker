@@ -13,9 +13,10 @@
   },
   "main": "background.js",
   "dependencies": {
-    "ant-design-vue": "^1.6.1",
+    "ant-design-vue": "^1.6.2",
+    "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "request": "^2.88.2",
+    "timeago.js": "^4.0.2",
     "vue": "^2.6.11",
     "vue-router": "^3.3.3",
     "vuex": "^3.4.0"
