@@ -56,6 +56,20 @@
     </a-page-header>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+
+    }
+  },
+  mounted() {
+    // 根据 Id inspect a container
+    // let id = this.$reouter.params.id;
+    
+  }
+}
+</script>
 <style>
 tr:last-child td {
   padding-bottom: 0;
