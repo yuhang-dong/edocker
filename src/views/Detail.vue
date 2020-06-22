@@ -52,7 +52,6 @@
 
 <script>
 import { pingPeriod } from '../config/timerConfig'
-import { ping } from "../utils/docker/system";
 export default {
   data() {
     return {
@@ -64,20 +63,10 @@ export default {
   methods: {
     pingServer() {
       let that = this;
-      let _ping = ping(this.connectUrl);
-      _ping
-        .then(function([response, body]) {
-          if(response.statusCode == 200) {
+      this.$docker.ping()
+        .then(function() {
             that.online = true;
             that.offlineCause = '';
-          } else {
-            that.online = false;
-            if(body) {
-              let data = JSON.parse(body);
-              that.offlineCause = data.message;
-            }
-            console.log(that.offlineCause)
-          }
         })
         .catch(function(error) {
             that.online = false;

@@ -8,15 +8,12 @@ import store from './store'
 Vue.config.productionTip = false
 
 // import http
-var http = require('request');
-Vue.prototype.$ajax = http;
-
+var dockerode = require('dockerode');
+Vue.prototype.$DOCKER = dockerode;
 
 // import other
 Vue.use(Antd);
 Vue.use(VueRouter);
-
-
 
 new Vue({
   render: h => h(App),

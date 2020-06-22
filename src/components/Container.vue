@@ -48,7 +48,6 @@
 import { getContainersPeriod } from '../config/timerConfig'
 import  {dateFtt} from '../utils/commonUtil'
 import { format } from 'timeago.js';
-import { listContainers } from '../utils/docker/system'
 const columns = [
   {
     dataIndex: 'Names',
@@ -96,22 +95,17 @@ export default {
         this.loading = true;
       }
       let that = this;
-      let _listContainers = listContainers(that.$store.state.connectUrl);
-      _listContainers
-        .then(function([response, body]) {
-          if(response.statusCode == 200) {
+      this.$docker.listContainers({all: 1})
+        .then(function(data) {
             // 成功访问
-            that.data = JSON.parse(body);
-
-          }
-          if(first || that.loading) {
-              that.loading = false;
-          }
-
+            that.data = JSON.parse(data);
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(function() {
+          that.loading = false;
+        })
     },
     longToTime(long) {
       return dateFtt("yyyy-MM-dd hh:mm:ss", new Date(long*1000));
