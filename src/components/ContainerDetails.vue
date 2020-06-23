@@ -2,8 +2,8 @@
   <div>
     <a-page-header
       style="border: 1px solid rgb(235, 237, 240)"
-      title="Title"
-      sub-title="This is a subtitle"
+      :title="container.Name"
+      sub-title=""
       @back="() => $router.go(-1)"
     >
       <template slot="tags">
@@ -16,8 +16,12 @@
       </template>
       <template slot="footer">
         <a-tabs default-active-key="1">
-          <a-tab-pane key="1" tab="Details" />
-          <a-tab-pane key="2" tab="Rule" />
+          <a-tab-pane key="1" tab="Details">
+            <json-viewer 
+              :value="container"
+              :copyable="true"
+              :sort="true"></json-viewer>
+          </a-tab-pane>
         </a-tabs>
       </template>
       <div class="content">
@@ -57,16 +61,29 @@
   </div>
 </template>
 <script>
+import {JsonViewer } from 'vue-json-viewer'
 export default {
+  components:{
+    JsonViewer
+  },
   data() {
     return {
-
+      container: {},
     }
   },
   mounted() {
     // 根据 Id inspect a container
-    // let id = this.$reouter.params.id;
-    
+    let id = this.$reouter.params.id;
+    let that = this;
+    this.$store.state.docker
+      .getContainer(id)
+      .insepct({size: true})
+      .then(function(data) {
+        that.container = JSON.parse(data);
+      })
+      .catch(function(err) {
+        that.$message.error(err.toString());
+      });
   }
 }
 </script>

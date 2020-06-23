@@ -95,7 +95,7 @@ export default {
         this.loading = true;
       }
       let that = this;
-      this.$docker.listContainers({all: 1})
+      this.$store.state.docker.listContainers({all: 1})
         .then(function(data) {
             // 成功访问
             that.data = JSON.parse(data);
