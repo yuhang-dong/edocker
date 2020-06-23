@@ -12,6 +12,8 @@ Vue.config.productionTip = false
 var dockerode = require('dockerode');
 Vue.prototype.$DOCKER = dockerode;
 
+var fs = require('fs');
+Vue.prototype.$fs = fs;
 // import other
 Vue.use(Antd);
 Vue.use(VueRouter);
