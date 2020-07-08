@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue'
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
 import VueRouter from 'vue-router'
 import router from './router'
 import store from './store'
@@ -14,7 +14,7 @@ Vue.prototype.$DOCKER = dockerode;
 var fs = require('fs');
 Vue.prototype.$fs = fs;
 // import other
-Vue.use(Antd);
+Vue.use(ViewUI);
 Vue.use(VueRouter);
 new Vue({
   render: h => h(App),

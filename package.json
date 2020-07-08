@@ -13,11 +13,8 @@
   },
   "main": "background.js",
   "dependencies": {
-    "ant-design-vue": "^1.6.2",
-    "axios": "^0.19.2",
-    "core-js": "^3.6.5",
     "dockerode": "^3.2.0",
-    "timeago.js": "^4.0.2",
+    "view-design": "^4.3.1",
     "vue": "^2.6.11",
     "vue-json-viewer": "^2.2.12",
     "vue-router": "^3.3.3",
